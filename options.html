@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>AAM</title>
+        <meta charset="UTF-8">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui">
+        <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <h1><img class="aam-icon"><span>Automatic Actions Management (AAM) Settings</span><img class="aam-icon"></h1>
+        <div style="text-align:center;" id="settings-table">
+            <table cellspacing='0'>
+                <thead>
+                    <tr>
+                        <th>Target URL</th><th>Selector</th><th>Event type</th><th>Repeat</th><th>Timeout (ms)</th><th>On-Off</th><th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div id="status">
+        </div>
+        <button id="save" class="btn btn-blue">Save all</button>
+        <button id="add" class="btn btn-green">Add row</button>
+        <script src="js/onFunctionsJS.js"></script>
+        <script src="js/options.js"></script>
+    </body>
+</html>
