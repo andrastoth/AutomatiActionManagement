@@ -1,7 +1,7 @@
 (function() {
     'use strict';
     /**
-     * Remove all added context menu item
+     * Remove all previously added context menu item
      */
     chrome.tabs.onActivated.addListener(function(tabId, changeInfo, tab) {
         chrome.contextMenus.removeAll(null);
