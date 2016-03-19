@@ -1,16 +1,25 @@
 (function() {
     'use strict';
     /**
-     * Remove all previously added context menu item
+     * Remove all added context menu item
      */
     chrome.tabs.onActivated.addListener(function(tabId, changeInfo, tab) {
         chrome.contextMenus.removeAll(null);
     });
+    /**
+     * After extension is installed check for the saved parameters
+     * If parameters does not exists, create ones 
+     */
     chrome.runtime.onInstalled.addListener(function(object) {
-        chrome.storage.sync.set({
-            'settings': [],
-            'isRunning': true
-        }, null);
+        chrome.storage.sync.get('settings', function(i) {
+            if (i.settings === undefined) {
+                chrome.storage.sync.set({
+                    'settings': [],
+                    'scriptFiles': [],
+                    'isRunning': true
+                }, null);
+            }
+        });
     });
     /**
      * Recieve Message from extension

@@ -13,14 +13,27 @@
             <table cellspacing='0'>
                 <thead>
                     <tr>
-                        <th>Target URL</th><th>Selector</th><th>Event type</th><th>Repeat</th><th>Timeout (ms)</th><th>On-Off</th><th>Remove</th>
+                        <th>Target URL</th>
+                        <th>Selector Or Script</th>
+                        <th>Document state</th>
+                        <th>Event type</th>
+                        <th>Repeat</th>
+                        <th>Timeout (ms)</th>
+                        <th>On-Off</th>
+                        <th>Remove</th>
                     </tr>
                 </thead>
                 <tbody>
                 </tbody>
             </table>
         </div>
-        <div id="status">
+        <div class="input-popup-overlay">
+           <div class="input-popup">
+               <h1><span>File name: </span><input style="text" id="save-name"></h1>
+               <textarea id="save-data"></textarea>
+               <button id="save-file" class="btn btn-blue">Save to file</button>
+               <button id="close" class="btn btn-orange">Close</button>
+           </div>
         </div>
         <button id="save" class="btn btn-blue">Save all</button>
         <button id="add" class="btn btn-green">Add row</button>
