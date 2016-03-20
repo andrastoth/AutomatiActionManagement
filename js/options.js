@@ -212,7 +212,9 @@
         tbl.innerHTML = '';
         chrome.storage.sync.get('settings', function(i) {
             var settings = i.settings;
-            settings.forEach(function(rw) {
+            settings.settings.sort(function(a, b) {
+                return a.host == b.host ? 0 : +(a.host > b.host) || -1;
+            }).forEach(function(rw) {
                 var row = document.createElement('tr');
                 row.setAttribute('data-enabled', rw.state);
                 row.innerHTML = [
