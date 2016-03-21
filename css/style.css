@@ -284,6 +284,7 @@ h1 .red-icon {
 }
 
 .input-popup textarea {
+    white-space: pre;
     height: calc(100% - 140px);
     width: calc(100% - 40px);
     max-height: calc(100% - 140px);
