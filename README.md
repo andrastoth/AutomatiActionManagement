@@ -20,8 +20,8 @@ Cookie accepter:
 </p>
 
 	- The extension has created the 'Action' in the background with default settings.
-  	- if you want to view or to modify the settings, click on AAM icon on top right corner of the browser. 
-      When popup window opens, click AAM setting button.
+   	- if you want to view or to modify the settings, click on AAM icon on top right corner of the browser. 
+   	- When popup window opens, click AAM setting button.
 	- Settings tab opens.
 
 <p>
@@ -30,7 +30,7 @@ Cookie accepter:
 
 Settings tab table columns:
 
-    - Target URL: it is a target website url where you want to activate AAM
+	- Target URL: it is a target website url where you want to activate AAM
    	- Selector Or Script: selected item full DOM path Or script Filename*
    	- Document state: That status of the document, when you want to launch AAM (Dom content loaded or window loaded)
    	- Event type: click, remove or script (inject)
