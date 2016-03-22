@@ -33,11 +33,25 @@
                         return request.location.host.indexOf(f) === -1;
                     }).length) {
                     chrome.contextMenus.create({
-                        "title": "Add to AAM",
+                        "title": "Addition to the AAM (Simple)",
                         "contexts": ["page", "frame", "link", "image", "video", "audio"],
                         "onclick": clickHandler
                     });
+                    chrome.contextMenus.create({
+                        "title": "Addition to the AAM (Visual)",
+                        "contexts": ["page", "frame", "link", "image", "video", "audio"],
+                        "onclick": clickHandlerSpecial
+                    });
                 }
+            });
+        }
+        if (request.order == 'setSpecialSelectedItem' && request.item) {
+            chrome.storage.sync.get('settings', function(i) {
+                var settings = i.settings;
+                settings.push(request.item);
+                chrome.storage.sync.set({
+                    'settings': settings
+                }, null);
             });
         }
     });
@@ -49,7 +63,7 @@
      */
     function clickHandler(info, tab) {
         chrome.tabs.sendMessage(tab.id, {
-            order: "SendInfoToAutomaticActionManagement"
+            order: "SendInfoWithNormalSelection"
         }, function(obj) {
             chrome.storage.sync.get('settings', function(i) {
                 var settings = i.settings;
@@ -59,5 +73,16 @@
                 }, null);
             });
         });
+    }
+    /**
+     * Send message to tab where click is occurred
+     * @param  {int} info
+     * @param  {tab} tab
+     * Recieve message from tab, and add obj to settings
+     */
+    function clickHandlerSpecial(info, tab) {
+        chrome.tabs.sendMessage(tab.id, {
+            order: "SendInfoWithSpecialSelection"
+        }, null);
     }
 })();

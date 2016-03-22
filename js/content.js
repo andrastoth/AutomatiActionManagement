@@ -1,7 +1,10 @@
 (function() {
     'use strict';
-    var targetPath = null,
+    var item = null,
         files = [];
+    var st = document.createElement('style');
+    st.textContent = '.AAM-highlight {background-color: #bcd5eb !important;outline: 2px solid #5166bb !important; transition: all 0.3s;outline-offset: -2px;} .AAM-highlight * {opacity: 0.9 !important;}';
+    st.id = 'AAM-styleSheet';
     /**
      * Try to run required action, based on settings array item
      * @param {object} f setting array item
@@ -39,6 +42,11 @@
      * @return {string}
      */
     function getDomPath(el) {
+        if (el.id != '') {
+            if (document.querySelectorAll('#'.concat(el.id)).length === 1) {
+                return '#'.concat(el.id);
+            }
+        }
         var path = [];
         while (el.nodeName.toLowerCase() !== 'html') {
             path.unshift(el.nodeName.concat(':nth-of-type(', ([].indexOf.call([].filter.call(el.parentNode.childNodes, function(f) {
@@ -93,8 +101,11 @@
         window.addEventListener('load', startActionsManagement.bind(null, 1), false);
         window.document.addEventListener('mousedown', function(e) {
             if (e.button == 2) {
+                if(item){
+                    item.classList.remove('AAM-highlight');
+                }
                 setContextMenu(window.location);
-                targetPath = getDomPath(e.target);
+                item = e.target;
             }
         }, false);
         /**
@@ -102,12 +113,12 @@
          * And send response with obj parameter
          */
         chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
-            if (request.order == "SendInfoToAutomaticActionManagement") {
+            if (request.order == "SendInfoWithNormalSelection") {
                 var obj = {
                     protocol: window.location.protocol,
                     host: window.location.host,
                     pathname: window.location.pathname,
-                    selector: targetPath,
+                    selector: getDomPath(item),
                     when: 0,
                     event: 0,
                     repeat: 30,
@@ -116,7 +127,68 @@
                 };
                 sendResponse(obj);
             }
+            if (request.order == "SendInfoWithSpecialSelection") {
+                window.removeEventListener('keyup', specialSelection, false);
+                window.addEventListener('keyup', specialSelection, false);
+                if (item) {
+                    document.querySelector('head').appendChild(st);
+                    item.classList.add('AAM-highlight');
+                }
+            }
         });
+    }
+
+    function specialSelection(e) {
+        if (e.altKey && (e.keyCode === 81 || e.keyCode === 69)) {
+            document.querySelector('head').removeChild(st);
+            item.classList.remove('AAM-highlight');
+            window.removeEventListener('keyup', specialSelection);
+            if (e.keyCode === 69) {
+                var obj = {
+                    protocol: window.location.protocol,
+                    host: window.location.host,
+                    pathname: window.location.pathname,
+                    selector: getDomPath(item),
+                    when: 0,
+                    event: 0,
+                    repeat: 30,
+                    timeout: 300,
+                    state: true
+                };
+                chrome.extension.sendMessage({
+                    order: 'setSpecialSelectedItem',
+                    item: obj
+                }, null);
+            }
+        }
+        if (item && e.altKey && e.keyCode === 87) {
+            if (item.parentElement) {
+                item.classList.remove('AAM-highlight');
+                item.parentElement.classList.add('AAM-highlight');
+                item = item.parentElement;
+            }
+        }
+        if (item && e.altKey && e.keyCode === 83) {
+            if (item.children[0]) {
+                item.classList.remove('AAM-highlight');
+                item.children[0].classList.add('AAM-highlight');
+                item = item.children[0];
+            }
+        }
+        if (item && e.altKey && e.keyCode === 65) {
+            if (item.previousElementSibling) {
+                item.classList.remove('AAM-highlight');
+                item.previousElementSibling.classList.add('AAM-highlight');
+                item = item.previousElementSibling;
+            }
+        }
+        if (item && e.altKey && e.keyCode === 68) {
+            if (item.nextElementSibling) {
+                item.classList.remove('AAM-highlight');
+                item.nextElementSibling.classList.add('AAM-highlight');
+                item = item.nextElementSibling;
+            }
+        }
     }
     return {
         Init: function() {
