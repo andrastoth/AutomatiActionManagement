@@ -4,7 +4,7 @@
     "name": "Automatic Actions Management",
   	"short_name": "AAM",
     "description": "This extension will able to run predefined user events.",
-    "version": "1.0",
+    "version": "1.2",
     "options_page": "options.html",
     "browser_action": {
         "default_icon": "css/images/icon48.png",
