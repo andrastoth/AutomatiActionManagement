@@ -3,49 +3,11 @@
     var item = null,
         files = [],
         infoDiv = document.createElement('div'),
-        st = document.createElement('style');
+        st = document.createElement('link');
     infoDiv.className = 'AAM-info';
     st.id = 'AAM-styleSheet';
-    st.textContent = ['.AAM-highlight {',
-    '    background-color: #bcd5eb !important;',
-    '    outline: 2px solid #5166bb !important;',
-    '    transition: all 0.3s;',
-    '    outline-offset: -2px;',
-    '}',
-    '',
-    '.AAM-highlight * {',
-    '    opacity: 0.9 !important;',
-    '}',
-    '',
-    '.AAM-info {',
-    '    font-size: 14px;',
-    '    visibility: visible;',
-    '    opacity: 0.9;',
-    '    font-family: monospace;',
-    '    font-weight: bold;',
-    '    overflow: hidden;',
-    '    display: inline-block;',
-    '    text-overflow: ellipsis;',
-    '    max-width: 50%;',
-    '    padding: 5px;',
-    '    margin: 5px;',
-    '    position: fixed;',
-    '    top: 0;',
-    '    left: 0;',
-    '    text-align: center;',
-    '    background-color: #272822;',
-    '    outline: 2px solid #5166bb;',
-    '    z-index: 999999;',
-    '}',
-    '.AAM-info .tag {',
-    '    color: #F92672;',
-    '}',
-    '.AAM-info .txt {',
-    '    color: #FD971F;',
-    '}',
-    '.AAM-info .attr {',
-    '    color: #A6E22E;',
-    '}'].join('\n');
+    st.rel = 'stylesheet';
+    st.href = chrome.extension.getURL('css/aam-content-style.css');
     /**
      * Try to run required action, based on settings array item
      * @param {object} f setting array item
@@ -138,7 +100,7 @@
      * Add EventListeners to window, window.document, chrome.extension
      */
     function init() {
-        startActionsManagement(0);
+        window.addEventListener('DOMContentLoaded', startActionsManagement.bind(null, 0), false);
         window.addEventListener('load', startActionsManagement.bind(null, 1), false);
         window.document.addEventListener('mousedown', function(e) {
             if (e.button == 2) {

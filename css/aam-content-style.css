@@ -1,0 +1,40 @@
+.AAM-highlight {
+    background-color: #bcd5eb !important;
+    outline: 2px solid #5166bb !important;
+    transition: all 0.3s;
+    outline-offset: -2px;
+}
+
+.AAM-highlight * {
+    opacity: 0.9 !important;
+}
+
+.AAM-info {
+    font-size: 14px;
+    visibility: visible;
+    opacity: 0.8;
+    font-family: monospace;
+    font-weight: bold;
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+    max-width: 50%;
+    padding: 5px;
+    margin: 5px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    text-align: left;
+    background-color: #272822;
+    outline: 2px solid #5166bb;
+    z-index: 999999;
+}
+.AAM-info .tag {
+    color: #F92672;
+}
+.AAM-info .txt {
+    color: #FD971F;
+}
+.AAM-info .attr {
+    color: #A6E22E;
+}
